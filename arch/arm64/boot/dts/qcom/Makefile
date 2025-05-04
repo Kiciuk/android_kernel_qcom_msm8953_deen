@@ -563,7 +563,7 @@ dtb-$(CONFIG_ARCH_MSM8953) += msm8953-cdp.dtb \
 	msm8953-pmi8937-ext-codec-mtp.dtb \
 	msm8953-pmi632-cdp-s2.dtb \
 	msm8953-pmi632-cdp-s2.dtb \
-	msm8953-deen-pvt2.dtb \
+	motorola/deen/msm8953-deen-pvt2.dtb \
 	apq8053-batcam.dtb
 	
 
