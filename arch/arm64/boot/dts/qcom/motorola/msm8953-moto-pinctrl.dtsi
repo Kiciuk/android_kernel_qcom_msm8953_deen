@@ -10,6 +10,24 @@
  * GNU General Public License for more details.
  */
 
+&pri_tlmm_lines_act {
+	mux {
+		pins = "gpio91", "gpio93";
+	};
+	config {
+		pins = "gpio91", "gpio93";
+	};
+};
+&pri_tlmm_lines_sus {
+	mux {
+		pins = "gpio91", "gpio93";
+	};
+	config {
+		pins = "gpio91", "gpio93";
+	};
+};
+
+
 
 &spi6_sleep {
 
@@ -39,6 +57,18 @@ mux {
 };
 
 &tlmm{
+/delete-node/ nfc;
+/delete-node/ ext_amp_ctrl;
+/delete-node/ ts_int_default;
+/delete-node/ ts_int_output_high;
+/delete-node/ ts_int_output_low;
+/delete-node/ ts_int_input;
+/delete-node/ ts_rst_default;
+/delete-node/ ts_rst_output_high;
+/delete-node/ ts_rst_output_low;
+/delete-node/ ts_rst_input;
+/delete-node/ ssusb_mode_sel;
+/delete-node/ typec_ssmux_config;
 	fps: fps {
 		rst_active: rst_active {
 			/* RESET */
