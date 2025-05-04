@@ -10,7 +10,7 @@
  * GNU General Public License for more details.
  */
 
-#include "msm8953-moto-common.dtsi"
+#include "../msm8953-moto-common.dtsi"
 #include "dsi-panel-mot-tianma-586-720p-vid.dtsi"
 #include "dsi-panel-mot-nova-586-hd-vid.dtsi"
 #include "msm8953-deen-pinctrl.dtsi"
@@ -508,7 +508,7 @@
 	qcom,mdss-pref-prim-intf = "dsi";
 
 	mot_dba_panel: qcom,mdss_dsi_mot_dba_panel{
-		#include "dsi-panel-mot-mod-fwvga-video-common.dtsi"
+		#include "../dsi-panel-mot-mod-fwvga-video-common.dtsi"
 	};
 };
 

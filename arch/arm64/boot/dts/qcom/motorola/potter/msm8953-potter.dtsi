@@ -11,15 +11,15 @@
  */
 
 #include "msm8953.dtsi"
-#include "msm-pmi8950.dtsi"
+#include "../msm-pmi8950.dtsi"
 #include "msm8953-pinctrl.dtsi"
 #include "msm8953-potter-pinctrl.dtsi"
-#include "dsi-panel-mot-dummy-qhd-video.dtsi"
+#include "../dsi-panel-mot-dummy-qhd-video.dtsi"
 #include <moto-mem-reserve.h>
 #include "msm8953-camera-sensor-mot-potter.dtsi"
 #include "dsi-panel-mot-tianma-520-1080p-vid.dtsi"
 #include "dsi-panel-mot-boe-520-1080p-vid.dtsi"
-#include "carrier-channel-ids.dtsi"
+#include "../carrier-channel-ids.dtsi"
 #include "msm8953-potter-sensor.dtsi"
 #include "msm8953-potter-fps.dtsi"
 
