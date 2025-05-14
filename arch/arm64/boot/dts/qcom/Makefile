@@ -559,6 +559,7 @@ dtb-$(CONFIG_ARCH_MSM8976) += msm8976-sim.dtb \
 	msm8976-v1.1-mtp-rome.dtb \
 	msm8976-v1.1-cdp.dtb \
 	msm8976-v1.1-rcm.dtb \
+	msm8976-leeco-s2.dtb \
 	apq8076-v1.1-mtp.dtb \
 	apq8076-v1.1-cdp.dtb \
 	apq8076-v1.1-mtp-rome.dtb
