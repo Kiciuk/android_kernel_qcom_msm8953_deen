@@ -23,19 +23,24 @@
 };
 
 /delete-node/ &cont_splash_mem;
-
+/delete-node/ &other_ext_mem;
 / {
-	memory {
-		ramoops_mem: ramoops_region@0 {
-			linux,reserve-contiguous-region;
-			linux,reserve-region;
+	reserved-memory {
+		ramoops_mem: ramoops_region@9ff00000 {
+		compatible = "removed-dma-pool", "ramoops";
+		record-size = <0x10000>;
+			console-size = <0x60000>;
+			ftrace-size = <0x10000>;
+			pmsg-size = <0x20000>;
+			ecc-size = <16>;
+			status = "okay";
 			reg = <0x0 0x9ff00000 0x0 0x00100000>;
-			linux,remove-completely;
 			label = "ramoops_mem";
 		};
 
-		other_ext_mem: other_ext_region@0 {
-			/delete-property/ reg;
+		other_ext_mem: other_ext_region@84a00000 {
+			compatible = "removed-dma-pool";
+			no-map;
 			reg = <0x0 0x84A00000 0x0 0x1E00000>;
 		};
 
@@ -46,6 +51,11 @@
 			label = "cont_splash_mem";
 		};
 	};
+	qcom,mpm2-sleep-counter@4a3000 {
+		compatible = "qcom,mpm2-sleep-counter";
+		reg = <0x4a3000 0x1000>;
+		clock-frequency = <32768>;
+	};
 };
 
 &blsp1_uart2 {
@@ -53,7 +63,7 @@
 	pinctrl-names = "default";
 };
 
-&i2c_6 { /* BLSP2 QUP2 */
+&i2c_6 { /* 
 	ti-type-c@47 {
 		compatible = "ti,usb-type-c";
 		reg = <0x47>;
@@ -61,8 +71,8 @@
 		qcom,vdd-always-on;
 		vdd_io-supply = <&pm8950_l5>;
 		interrupt-parent = <&msm_gpio>;
-		interrupts = <21 0>;    /* MSM GPIO 21, TRIGGER_FALLING */
-		ti,irq-gpio = <&msm_gpio 21 0>;	/* active low ENB */
+		interrupts = <21 0>;   
+		ti,irq-gpio = <&msm_gpio 21 0>;
 		pinctrl-names = "audio_swch_act",
 				"audio_swch_sus",
 				"vconn1_swch_act",
@@ -96,8 +106,13 @@
 		qcom,board-id3-gpios = <&msm_gpio 63 0>;
 		qcom,uart-tx = <&msm_gpio 4 0>;
 		qcom,uart-rx = <&msm_gpio 5 0>;
+		
+		
+		
+		
+		
 	};
-
+ */
 	nxp-type-c@1d {
 		compatible = "nxp,usb-type-c";
 		reg = <0x1d>;
@@ -147,6 +162,17 @@
 		reg = <0x5a>;
 		ti,drv2604l-enable-gpio = <&msm_gpio 109 0>;
 	};
+};
+
+
+&usb_otg {
+		qcom,usbin-vadc = <&pmi8950_vadc>;
+	};
+
+
+&mdss_dsi {
+	hw-config = "single_dsi";
+	qcom,split-dsi-independent-pll;
 };
 
 &i2c_8{
@@ -237,98 +263,21 @@
 
 	status = "disabled";
 };
-
+/* removed 
 &android_usb {
 	qcom,android-usb-cdrom;
 };
+*/
 
 &usb_otg {
 	qcom,hsusb-otg-phy-init-seq =
 			<0x73 0x80 0x0a 0x81 0x3f 0x82 0x33 0x83 0xffffffff>;
 };
 
-/* CoreSight */
-&tpiu {
-	pinctrl-names = "sdcard", "trace", "swduart",
-			"swdtrc", "jtag", "spmi";
-	/* NIDnT */
-	pinctrl-0 = <&qdsd_clk_sdcard &qdsd_cmd_sdcard
-			 &qdsd_data0_sdcard &qdsd_data1_sdcard
-			 &qdsd_data2_sdcard &qdsd_data3_sdcard>;
-	pinctrl-1 = <&qdsd_clk_trace &qdsd_cmd_trace
-			 &qdsd_data0_trace &qdsd_data1_trace
-			 &qdsd_data2_trace &qdsd_data3_trace>;
-	pinctrl-2 = <&qdsd_cmd_swduart &qdsd_data0_swduart
-			 &qdsd_data1_swduart &qdsd_data2_swduart
-			 &qdsd_data3_swduart>;
-	pinctrl-3 = <&qdsd_clk_swdtrc &qdsd_cmd_swdtrc
-			 &qdsd_data0_swdtrc &qdsd_data1_swdtrc
-			 &qdsd_data2_swdtrc &qdsd_data3_swdtrc>;
-	pinctrl-4 = <&qdsd_cmd_jtag &qdsd_data0_jtag
-			 &qdsd_data1_jtag &qdsd_data2_jtag
-			 &qdsd_data3_jtag>;
-	pinctrl-5 = <&qdsd_clk_spmi &qdsd_cmd_spmi
-			 &qdsd_data0_spmi &qdsd_data3_spmi>;
-};
-
 &i2c_4 { /* BLSP1 QUP4 */
-	focaltech@38 {
-		compatible = "focaltech,5x06";
-		reg = <0x38>;
-		interrupt-parent = <&msm_gpio>;
-		interrupts = <65 0x2>;
-		vdd-supply = <&pm8950_l17>;
-		vcc_i2c-supply = <&pm8950_l6>;
-		/* pins used by touchscreen */
-		pinctrl-names = "pmx_ts_active","pmx_ts_suspend","pmx_ts_release";
-		pinctrl-0 = <&ts_int_active &ts_reset_active>;
-		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
-		pinctrl-2 = <&ts_release>;
-		focaltech,name = "ft5446";
-		focaltech,family-id = <0x06>;
-		focaltech,reset-gpio = <&msm_gpio 64 0x0>;
-		focaltech,irq-gpio = <&msm_gpio 65 0x2008>;
-		focaltech,display-coords = <0 0 1079 1919>;
-		focaltech,panel-coords = <0 0 1079 2084>;
-		focaltech,button-map= <139 102 158>;
-		focaltech,no-force-update;
-		focaltech,i2c-pull-up;
-		focaltech,group-id = <1>;
-		focaltech,hard-reset-delay-ms = <20>;
-		focaltech,soft-reset-delay-ms = <200>;
-		focaltech,num-max-touches = <5>;
-		focaltech,fw-delay-aa-ms = <30>;
-		focaltech,fw-delay-55-ms = <30>;
-		focaltech,fw-upgrade-id1 = <0x79>;
-		focaltech,fw-upgrade-id2 = <0x08>;
-		focaltech,fw-delay-readid-ms = <10>;
-		focaltech,fw-delay-era-flsh-ms = <2000>;
-		focaltech,fw-auto-cal;
-		focaltech,ignore-id-check;
-	};
 
-	synaptics@20 {
-		compatible = "synaptics,rmi4";
-		reg = <0x20>;
-		interrupt-parent = <&msm_gpio>;
-		interrupts = <65 0x2008>;
-		vdd-supply = <&pm8950_l17>;
-		vcc_i2c-supply = <&pm8950_l6>;
-		/* pins used by touchscreen */
-		pinctrl-names = "pmx_ts_active","pmx_ts_suspend","pmx_ts_release";
-		pinctrl-0 = <&ts_int_active &ts_reset_active>;
-		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
-		pinctrl-2 = <&ts_release>;
-		synaptics,display-coords = <0 0 1079 1919>;
-		synaptics,panel-coords = <0 0 1079 2084>;
-		synaptics,irq-gpio = <&msm_gpio 65 0x2008>;
-		synaptics,reset-gpio = <&msm_gpio 64 0x0>;
-		synaptics,i2c-pull-up;
-		synaptics,power-down;
-		synaptics,disable-gpios;
-		synaptics,bypass-packrat-id-check;
-		synaptics,button-map = <139 172 158>;
-	};
+
+	
 };
 
 /delete-node/ &qcom_seecom;
@@ -502,12 +451,12 @@
 		qcom,headset-detect-gpios = <&msm_gpio 114 0>;
 		asoc-platform = <&pcm0>, <&pcm1>, <&pcm2>, <&voip>, <&voice>,
 				<&loopback>, <&compress>, <&hostless>,
-				<&afe>, <&lsm>, <&routing>, <&lpa>,
+				<&afe>, <&lsm>, <&routing>,
 				<&voice_svc>;
 		asoc-platform-names = "msm-pcm-dsp.0", "msm-pcm-dsp.1", "msm-pcm-dsp.2",
 				"msm-voip-dsp", "msm-pcm-voice", "msm-pcm-loopback",
 				"msm-compress-dsp", "msm-pcm-hostless", "msm-pcm-afe",
-				"msm-lsm-client", "msm-pcm-routing", "msm-pcm-lpa",
+				"msm-lsm-client", "msm-pcm-routing",
 				"msm-voice-svc";
 		asoc-cpu = <&dai_pri_auxpcm>, <&dai_hdmi>,
 				<&dai_mi2s0>, <&dai_mi2s1>, <&dai_mi2s2>, <&dai_mi2s3>,
@@ -556,17 +505,14 @@
 	};
 };
 
-&tlmm_pinmux {
-	tlmm_gpio_key {
-		qcom,pins = <&gp 112>, <&gp 113>;
-		qcom,num-grp-pins = <2>;
-	};
+&mdss_dsi1
+{
+status = "disabled";
 };
-
 &spmi_bus {
 		qcom,pmi8950@3 {
 				qcom,leds@d800 {
-					qcom,en-cabc;
+					//qcom,en-cabc;
 					qcom,fs-curr-ua = <20000>;
 				};
 		};
@@ -604,8 +550,9 @@
 	/delete-property/ bias-pull-up;
 	bias-disable;
 };
-
-&pmi8950_haptic {
+/* Disabled uses drv2604L */
+&pmi_haptic {
+	status = "disabled";
 	qcom,vmax-mv = <3300>;
 };
 
@@ -634,22 +581,13 @@
 	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_hfp";
 };
 
-&pmx_mdss {
-	qcom,num-grp-pins = <1>;
-	qcom,pins = <&gp 25>;
-};
-
-&pmx_mdss_te {
-	qcom,num-grp-pins = <1>;
-	qcom,pins = <&gp 24>;
-};
-
 &mdss_dsi0 {
 	pinctrl-names = "mdss_default", "mdss_sleep";
 	pinctrl-0 = <&mdss_dsi_active &mdss_te_active>;
 	pinctrl-1 = <&mdss_dsi_suspend &mdss_te_suspend>;
 	qcom,dsi-pref-prim-pan = <&dsi_nt35596_1080_vid>;
 	qcom,platform-reset-gpio = <&msm_gpio 25 0>;
+	qcom,platform-te-gpio = <&msm_gpio 24 0>;
 };
 
 / {
@@ -660,7 +598,12 @@
 	};
 };
 
-&pmi8950_charger {
+/*
+review some of these
+dropped:
+qcom,force-aicl-rerun = <1>
+*/
+&qpnp_smbcharger {
 	qcom,battery-data = <&qrd_batterydata>;
 	qcom,float-voltage-mv = <4400>;
 	qcom,chg-led-sw-controls;
@@ -674,13 +617,13 @@
 	qcom,float-voltage-cool-comp = <1>;
 	qcom,fastchg-current-cool-comp = <700>;
 	qcom,jeita-temp-hard-limit = <1>;
-	qcom,force-aicl-rerun = <1>;
+	qcom,usbin-vadc = <&pmi8950_vadc>;
 	qcom,aicl-rerun-period-s = <3>;
 	qcom,dcin-vadc = <&pmi8950_vadc>;
 	qcom,vchg_sns-vadc = <&pmi8950_vadc>;
 };
 
-&pmi8950_fg {
+&qpnp_fg {
 	qcom,battery-data = <&qrd_batterydata>;
 	qcom,cold-bat-decidegc = <(0)>;
 	qcom,cool-bat-decidegc = <(150)>;
