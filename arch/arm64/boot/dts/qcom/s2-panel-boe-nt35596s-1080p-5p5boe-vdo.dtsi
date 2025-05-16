@@ -20,12 +20,12 @@
 &mdss_mdp {
 	dsi_boe_nt35596s_fhd_cmd: qcom,mdss_dsi_boe_nt35596s_fhd_5p5boe_vdo{
 		qcom,mdss-dsi-panel-name = "boe nt35596s fhd vdo dsi panel";
-		qcom,cont-splash-enabled;
-		qcom,mdss-dsi-panel-supply = <1>;
+		//qcom,cont-splash-enabled;
+		//qcom,mdss-dsi-panel-supply = <1>;
 		qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-		qcom,mdss-dsi-panel-controller = <&mdss_dsi0>;
+		//qcom,mdss-dsi-panel-controller = <&mdss_dsi0>;
 		qcom,mdss-dsi-panel-type = "dsi_video_mode";
-		qcom,mdss-dsi-panel-destination = "display_1";
+		//qcom,mdss-dsi-panel-destination = "display_1";
 		qcom,mdss-dsi-panel-framerate = <60>;
 		qcom,mdss-dsi-virtual-channel-id = <0>;
 		qcom,mdss-dsi-stream = <0>;
@@ -869,7 +869,7 @@
 		qcom,mdss-pan-physical-height-dimension = <122>;
 		qcom,mdss-dsi-h-sync-pulse = <1>;
 		qcom,mdss-dsi-traffic-mode = "burst_mode";
-		qcom,mdss-dsi-lane-map = "lane_map_0123";
+		//qcom,mdss-dsi-lane-map = "lane_map_0123";
 		qcom,mdss-dsi-bllp-eof-power-mode;
 		qcom,mdss-dsi-bllp-power-mode;
 		qcom,mdss-dsi-lp11-init;
@@ -895,12 +895,12 @@
 		qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 		qcom,mdss-dsi-panel-status-read-length=<1>;
 		qcom,mdss-dsi-panel-status-value = <0x9C>;
-		qcom,mdss-dsi-bl-pmic-pwm-frequency = <100>;
-		qcom,mdss-dsi-bl-pmic-bank-select = <0>;
+		//qcom,mdss-dsi-bl-pmic-pwm-frequency = <100>;
+		//qcom,mdss-dsi-bl-pmic-bank-select = <0>;
 		qcom,mdss-dsi-dma-trigger = "trigger_sw";
 		qcom,mdss-dsi-mdp-trigger = "none";
-		qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
-		qcom,mdss-dsi-bl-min-level = <0>;
+		qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_wled";
+		qcom,mdss-dsi-bl-min-level = <1>;
 		qcom,mdss-dsi-bl-max-level = <4095>;
 		qcom,mdss-dsi-reset-sequence = <1 10>, <0 10>, <1 10>;
 		qcom,mdss-dsi-post-init-delay = <5>;
