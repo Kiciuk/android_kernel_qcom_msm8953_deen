@@ -30,7 +30,9 @@
 
 	firmware: firmware {
 		android {
+			boot_devices = "soc/7824900.sdhci";
 			compatible = "android,firmware";
+			/*
 			fstab {
 				compatible = "android,fstab";
 				system {
@@ -42,6 +44,8 @@
 					status = "ok";
 				};
 			};
+			*/
+			
 		};
 	};
 
@@ -1251,7 +1255,13 @@
 			};
 		};
 	};
-
+	
+	android_usb: android_usb@086000c8 {
+		compatible = "qcom,android-usb";
+		reg = <0x086000c8 0xc8>;
+		qcom,pm-qos-latency = <59 150 10741>;
+	};
+	
 	slim_msm: slim@c140000{
 		cell-index = <1>;
 		compatible = "qcom,slim-ngd";
